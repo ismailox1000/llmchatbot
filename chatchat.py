@@ -78,7 +78,7 @@ def init():
     vectordb = Chroma(persist_directory=persist_directory, embedding_function=embedding)
     retriever = vectordb.as_retriever()
 
-    qa_chain = RetrievalQA.from_chain_type(llm=OpenAI(temperature=0.2, streaming=True),
+    qa_chain = RetrievalQA.from_chain_type(llm=OpenAI(temperature=0.2,max_tokens=512, streaming=True),
                                            chain_type="refine",
                                            retriever=retriever,
                                            return_source_documents=True)
