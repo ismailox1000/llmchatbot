@@ -70,7 +70,7 @@ if st.sidebar.button("Clear Chat"):
     st.session_state["past"] = []
     st.session_state["generated"] = []
 # Initialize the QA chain
-os.environ["OPENAI_API_KEY"] = "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"
+os.environ["OPENAI_API_KEY"] = "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"
 persist_directory = 'db'
 
 def init():
