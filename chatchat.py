@@ -29,7 +29,7 @@ page_bg_img = f"""
     background-size: cover;
     background-position: top left;
     background-repeat: no-repeat;
-    background-attachment: local;
+    background-attachment: fixed; /* Changed from local to fixed */
 }}
 
 [data-testid="stHeader"] {{
@@ -40,20 +40,28 @@ page_bg_img = f"""
     height: calc(100vh - 8rem);
     overflow-y: auto;
 }}
-[data-testid="stFormSubmitButton"]{{
-     width: 10%;
+
+[data-testid="stFormSubmitButton"] {{
+    width: 10%;
     bottom: 3rem;
     position: fixed;
     z-index: 1;
-    left:80%;
-}}
-[data-testid="stForm"]
-{{
-     width: 100%;
-    height:1%;
-    border:0px;
+    left: 80%;
 }}
 
+[data-testid="stForm"] {{
+    width: 100%;
+    height: 1%;
+    border: 0px;
+}}
+
+/* Media Query for Mobile */
+@media only screen and (max-width: 800px) {{
+    [data-testid="stAppViewContainer"] > .main {{
+        background-position: center; /* Adjusted to show the right half of the picture */
+        background-size: 280%
+    }}
+}}
 </style>
 """
 st.markdown(page_bg_img, unsafe_allow_html=True)
