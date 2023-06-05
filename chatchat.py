@@ -1,21 +1,21 @@
 import os
+import streamlit as st
+import base64
+import json
+import uuid
+
 from langchain.vectorstores import Chroma
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.llms import OpenAI
 from langchain.chains import RetrievalQA
-import streamlit as st
 from streamlit_chat import message
 from utils import get_initial_message, update_chat
-import json
-import uuid
-import base64
-st.set_page_config(layout="wide",page_title="Pet Care QA Chatbot", page_icon="🐾")
-st.markdown(
-    "<h1 style='text-align: center; color: red;'>UK and Ireland DoS AI Test Finder BETA</h1>",
-    unsafe_allow_html=True
-)
 
-@st.cache_data
+# Set Streamlit page configuration
+st.set_page_config(layout="wide", page_title="Pet Care QA Chatbot", page_icon="🐾")
+
+# Set background image for the app
+@st.cache_data  
 def get_img_as_base64(file):
     with open(file, "rb") as f:
         data = f.read()
@@ -55,6 +55,10 @@ page_bg_img = f"""
     border: 0px;
 }}
 
+[data-testid="main-menu-popover"]{{
+
+    background-color: white;
+}}
 /* Media Query for Mobile */
 @media only screen and (max-width: 800px) {{
     [data-testid="stAppViewContainer"] > .main {{
@@ -62,21 +66,42 @@ page_bg_img = f"""
         background-size: 280%
     }}
 }}
+
 </style>
+
+
 """
 st.markdown(page_bg_img, unsafe_allow_html=True)
 
 # Define the sidebar content
-st.sidebar.title('something here')
-st.sidebar.markdown('''
-    ## About
-    you can write here a description
-    here 
-''')
-if st.sidebar.button("Clear Chat"):
+
+
+
+
+st.sidebar.title('About')
+st.sidebar.markdown('''Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum enim mi, vestibulum in dapibus vitae, commodo non velit. Nulla maximus purus nunc, nec suscipit neque condimentum at. In dapibus, felis at tristique suscipit, sapien urna pretium felis, id interdum ex.''')
+
+st.sidebar.markdown('''------------------------''')
+
+if st.sidebar.button("Clear Chat", help="clear your history"):
     st.session_state["messages"] = get_initial_message()
     st.session_state["past"] = []
     st.session_state["generated"] = []
+
+st.sidebar.markdown('''------------------------''')
+
+
+st.sidebar.markdown('''
+    For further support and guidance follow the Link bellow
+    
+     
+''')
+
+columns = st.sidebar.columns(6)
+
+with columns[0]:
+    st.write("""<div style="width:100%;"><a href="https://www.idexx.co.uk/en-gb/veterinary/reference-laboratories/reference-laboratory-support/">https://www.idexx.co.uk/en-gb/veterinary...</a></div>""", unsafe_allow_html=True)
+
 # Initialize the QA chain
 os.environ["OPENAI_API_KEY"] = "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"
 persist_directory = 'db'
@@ -137,6 +162,7 @@ if query_text and submit_button:
         messages = update_chat(messages, "user", query_text)
         llm_response = qa_chain(query_text)
         response = llm_response['result']
+
         pages = []
         for num in llm_response['source_documents']:
             page_num = num.metadata['page']
@@ -151,5 +177,6 @@ if query_text and submit_button:
             with response_container:
                 for i in range(len(st.session_state["generated"]) - 1, -1, -1):
                     index = len(st.session_state["generated"]) - i - 1  # Calculate the index for displaying messages
-                    message(st.session_state["past"][index], is_user=True, key=str(uuid.uuid4()) + "_user")
-                    message(st.session_state["generated"][index], key=str(uuid.uuid4()))
+                    
+                    message(st.session_state["past"][index], is_user=True, key=str(uuid.uuid4()) + "_user",avatar_style="micah")
+                    message(st.session_state["generated"][index], key=str(uuid.uuid4()),avatar_style="personas")
