@@ -178,5 +178,5 @@ if query_text and submit_button:
                 for i in range(len(st.session_state["generated"]) - 1, -1, -1):
                     index = len(st.session_state["generated"]) - i - 1  # Calculate the index for displaying messages
                     
-                    message(st.session_state["past"][index], is_user=True, key=str(uuid.uuid4()) + "_user",avatar_style="micah")
-                    message(st.session_state["generated"][index], key=str(uuid.uuid4()),avatar_style="personas")
+                    message(st.session_state["past"][index], is_user=True, key=str(uuid.uuid4()) + "_user")
+                    message(st.session_state["generated"][index], key=str(uuid.uuid4()))
