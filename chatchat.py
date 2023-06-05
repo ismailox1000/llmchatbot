@@ -142,7 +142,7 @@ if query_text and submit_button:
             page_num = num.metadata['page']
             pages.append(str(page_num))
 
-        source_pages = "source pages : "+ ", ".join(pages)
+        source_pages = "source pages : "+ ", ".join(set(pages))
         st.session_state.past.append(query_text)  # Append the new user message at the end
         st.session_state.generated.append(response + '\n' + source_pages)  # Append the new generated message at the end
 
