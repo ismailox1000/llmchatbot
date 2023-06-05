@@ -137,8 +137,14 @@ if query_text and submit_button:
         messages = update_chat(messages, "user", query_text)
         llm_response = qa_chain(query_text)
         response = llm_response['result']
+        pages = []
+        for num in llm_response['source_documents']:
+            page_num = num.metadata['page']
+            pages.append(str(page_num))
+
+        source_pages = "source pages : "+ ", ".join(pages)
         st.session_state.past.append(query_text)  # Append the new user message at the end
-        st.session_state.generated.append(response)  # Append the new generated message at the end
+        st.session_state.generated.append(response + '\n' + source_pages)  # Append the new generated message at the end
 
         # Display the chat messages with newest messages at the top
         if len(st.session_state["generated"]) > 0:
